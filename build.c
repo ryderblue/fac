@@ -217,8 +217,7 @@ static bool target_readonly(struct target *t) {
 #ifndef _WIN32
   struct stat s;
   memset(&s, 0, sizeof(s));
-  stat(t->path, &s);
-  if (stat(t->path, &s) == 0) {
+  if (lstat(t->path, &s) == 0) {
     uid_t uid = geteuid();
     uid_t gid = getegid();
     if ((s.st_uid != uid || !(s.st_mode & S_IWUSR)) &&
